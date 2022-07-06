@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components"; //사용한 프레임1
+import { Route, Routes } from "react-router-dom"; //사용한 프레임2
+
+// import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
+import Myrate from "./Myrate";
+import Setrate from "./Setrate";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Container>
+        <Routes>
+          <Route path="/" element={<Myrate />} />
+          <Route path="/Setrate" element={<Setrate />} />
+        </Routes>
+      </Container>
     </div>
   );
 }
+
+const Container = styled.div`
+  max-width: 350px;
+  width: 80vw;
+  height: 90vh;
+  margin: 5vh auto;
+  padding: 5vh 0px;
+  border: 1px solid rgb(221, 221, 221);
+  box-sizing: border-box;
+  border-radius: 5px;
+  text-align: center;
+`;
+
 
 export default App;
