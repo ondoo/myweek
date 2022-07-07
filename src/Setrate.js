@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,7 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 const Setrate = (props) => {
   const navigate = useNavigate();
   const params = useParams();
-  const [rate, setRate] = React.useState(0);
+ const [rate, setRate] = React.useState(0); 
+ const [israte, setIsClick] = useState();
+ 
+ 
   React.useEffect(() => {
     const press = (e) => {
       console.log("", e);
@@ -22,7 +25,7 @@ const Setrate = (props) => {
 
   return (
     <div>
-      {params.week_days}요일
+      {params.days}요일
       <span> 평점 남기기</span>
       <div
         style={{
@@ -33,21 +36,19 @@ const Setrate = (props) => {
           width: "100%",
         }}
       ></div>
+      <div>
+      {Array(5)
+        .fill(0)
+        .map((w,idx) => {
+          return <FillCircle key={`fillcircle${idx}`} 
+          onClick =  {() => setRate(idx+1)}
+          style ={{backgroundColor: idx<rate? "yellow" : "gray"}}
+            />;
+        })}</div>
+      
       <button
-        onClick={() => {
-          navigate(-1);
-        }}
+        onClick = {() => {props.dispatch({setRate()})}
       >
-        {Array(w.rate)
-          .fill(0)
-          .map(() => {
-            return <Circle />;
-          })}
-        {Array(5 - w.rate)
-          .fill(0)
-          .map(() => {
-            return <FillCircle />;
-          })}
         평점 남기기
       </button>{" "}
     </div>
@@ -68,6 +69,7 @@ const FillCircle = styled.div`
   border-radius: 30px;
   margin: 5px;
   background-color: gray;
+  display:inline-block;
 `;
 
 const btn = styled.div`

@@ -1,37 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+import {Link } from "react-router-dom";
 
-
-import { useNavigate } from "react-router-dom";
-
-const Myrate = (props) => {
-  const weekArr = ["일", "월", "화", "수", "목", "금", "토"];
-  const [circle, circleFill] = React.useState([0, 1, 2, 3, 4]);
-
-  const week_days = weekArr.map((_d, idx) => {
-    let today = new Date().getDay();
-    let d = today + idx > 6 ? today + idx - 7 : today + idx;
-
-    return weekArr[d];
-  });
-
-  let rate_sum = 0;
-
-  const week_rates = week_days.map((w, idx) => {
-    const random =
-      Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1) + 1)) +
-      Math.ceil(1);
-    rate_sum += random;
-
-    return {
-      day: w,
-      rate: random,
-    };
-  });
-  console.log(week_rates);
+const Myrate = ({ week_rates, rate_sum }) => {
+  console.log(week_rates, rate_sum);
   const rate_avg = (rate_sum / week_rates.length).toFixed(1);
   const [avg, setAvg] = React.useState(rate_avg);
+
 
   return (
     <div>
@@ -59,21 +35,28 @@ const Myrate = (props) => {
             </p>
             {Array(w.rate)
               .fill(0)
-              .map(() => {
-                return <Circle />;
+              .map((w,idx) => {
+                return <Circle key={`circle${idx}`}/>;
               })}
 
-            {Array(5-w.rate) 
+            {Array(5 - w.rate)
               .fill(0)
-              .map(() => {
-                return <FillCircle />;
+              .map((w,idx) => {
+                return <FillCircle key={`fillcircle${idx}`}/>;
               })}
-
-            <Triangle />
+            <Link to={`/Setrate/${w.day}`}>
+              <Triangle />
+            </Link>
           </div>
         );
       })}
+      <div>
+          <p>평균 평점</p>
+          <p>{avg}</p>
+          <button onClick = {() => setAvg("0.0")} >reset</button>
+      </div>
     </div>
+    
   );
 };
 
@@ -81,12 +64,6 @@ const Title = styled.h2`
   display: block;
   font-size: 1.17em;
   font-weight: bold;
-`;
-
-const ItemStyle = styled.div`
-  padding: 16px;
-  margin: 8px;
-  background-color: aliceblue;
 `;
 
 const Circle = styled.div`
@@ -119,6 +96,20 @@ const Triangle = styled.div`
   border-left-style: solid;
   color: rgb(255, 255, 255);
   cursor: pointer;
+`;
+
+const rate_avg = styled.div`
+width: 8rem;
+margin: 1rem auto;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+text-align: center;
+color: blue;
+padding: 9px;
+font-size: 25px;
+font-weight: bold;
 `;
 
 const btn = styled.div`
