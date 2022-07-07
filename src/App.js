@@ -36,7 +36,7 @@ function App() {
           <Route path="/" element={<Myrate week_rates 
           = {week_rates} rate_sum = {rate_sum}/>} />
           <Route path="/Setrate/:days" element={<Setrate />} />
-  
+
         </Routes>
       </Container>
     </div>

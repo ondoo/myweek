@@ -37,9 +37,7 @@ const Setrate = (props) => {
         }}
       ></div>
       <div>
-      {Array(5)
-        .fill(0)
-        .map((w,idx) => {
+      {Array(5).fill(0).map((w,idx) => {
           return <FillCircle key={`fillcircle${idx}`} 
           onClick =  {() => setRate(idx+1)}
           style ={{backgroundColor: idx<rate? "yellow" : "gray"}}
@@ -47,10 +45,12 @@ const Setrate = (props) => {
         })}</div>
       
       <button
-        onClick = {() => {props.dispatch({setRate()})}
-      >
+        onClick = {() =>{
+          dispatch(rate);
+          navigate("/");}
+        }>
         평점 남기기
-      </button>{" "}
+      </button>
     </div>
   );
 };
